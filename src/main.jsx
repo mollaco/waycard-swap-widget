@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { LiFiWidget } from '@lifi/widget'
-import '@lifi/widget/styles.css'
+
 
 const themeConfig = {
   variant: 'wide',
