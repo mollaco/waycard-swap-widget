@@ -1,38 +1,39 @@
-// src/App.tsx
 import React from 'react';
-import { LiFiWidget, WidgetConfig } from '@lifi/widget';
-// IMPORT CORRECTO DEL CSS (arregla el error de build)
+import {
+  LiFiWidget,
+  type WidgetConfig,
+  HiddenUI,
+} from '@lifi/widget';
 
+const apiKey = import.meta.env.VITE_LIFI_API_KEY;
 
+// Configuración del widget
 const widgetConfig: Partial<WidgetConfig> = {
-  // Usa la API key que ya has puesto en Vercel (variable de entorno)
-  apiKey: import.meta.env.VITE_LIFI_API_KEY,
+  // Layout: tipo de widget
+  variant: 'compact',          // o 'wide' si lo prefieres más ancho
+  subvariant: 'default',
+  appearance: 'light',
 
-  // Layout del widget como en el playground
-  variant: 'wide',
-  subvariant: 'split',        // pestañas Swap / Bridge
-  appearance: 'light',        // o 'dark' si quieres
+  // Queremos que siempre vaya hacia Polygon
+  toChain: 137,                // Polygon mainnet
 
-  // Destino fijo: Polygon
-  toChain: 137,               // chainId de Polygon
+  // Idioma
+  languages: {
+    default: 'es',
+    allow: ['es', 'en'],
+  },
 
-  // Slippage por defecto
-  slippage: 0.005,
-
-  // Tu comisión: 0.8%  (0.008)
+  // Comisión para ti (0.8% = 0.008)
   fee: 0.008,
 
-  // Ocultamos cosas que no quieres
-  hiddenUI: ['poweredBy', 'language', 'appearance'],
+  // Ocultar marca de LI.FI y selector de idioma dentro del widget
+  hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
 
-  // Estética del recuadro
+  // Estilo del contenedor (tarjeta central)
   theme: {
     container: {
-      boxShadow: '0px 18px 60px rgba(15, 23, 42, 0.20)',
       borderRadius: 24,
-      border: '1px solid rgba(148, 163, 184, 0.25)',
-      background: '#ffffff',
-      maxWidth: 420,
+      boxShadow: '0px 24px 64px rgba(15, 23, 42, 0.35)',
     },
   },
 };
@@ -45,14 +46,14 @@ const App: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background:
-          'radial-gradient(circle at 0% 0%, rgba(59,130,246,0.15) 0, transparent 55%),' +
-          'radial-gradient(circle at 100% 100%, rgba(56,189,248,0.12) 0, transparent 55%),' +
-          'linear-gradient(180deg,#0f172a,#020617)',
-        padding: '24px',
+        background: '#020617', // fondo oscuro tipo modal en el centro
       }}
     >
-      <LiFiWidget integrator="waycard-swap-widget" config={widgetConfig} />
+      <LiFiWidget
+        apiKey={apiKey}
+        integrator="Waycard Swap"
+        config={widgetConfig}
+      />
     </div>
   );
 };
