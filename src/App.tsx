@@ -1,31 +1,31 @@
 // src/App.tsx
 import React from 'react';
 import { LiFiWidget, WidgetConfig } from '@lifi/widget';
-// OJO: nombre correcto del CSS
+// IMPORT CORRECTO DEL CSS (arregla el error de build)
 import '@lifi/widget/styles.css';
 
 const widgetConfig: Partial<WidgetConfig> = {
-  // Tu API key de LI.FI (ya la has puesto en Vercel como VITE_LIFI_API_KEY)
+  // Usa la API key que ya has puesto en Vercel (variable de entorno)
   apiKey: import.meta.env.VITE_LIFI_API_KEY,
 
-  // Apariencia general del widget
-  variant: 'wide',        // como en el Playground
-  subvariant: 'split',    // pestañas Swap / Bridge
-  appearance: 'light',    // o 'dark' si quieres oscuro
+  // Layout del widget como en el playground
+  variant: 'wide',
+  subvariant: 'split',        // pestañas Swap / Bridge
+  appearance: 'light',        // o 'dark' si quieres
 
-  // Forzamos que el destino sea siempre Polygon
-  toChain: 137,           // Polygon
+  // Destino fijo: Polygon
+  toChain: 137,               // chainId de Polygon
 
-  // Slippage por defecto (0,5%)
+  // Slippage por defecto
   slippage: 0.005,
 
-  // Tu comisión: 0,8%  (0.008 = 0.8%)
+  // Tu comisión: 0.8%  (0.008)
   fee: 0.008,
 
-  // Ocultamos branding, idioma y selector de tema
+  // Ocultamos cosas que no quieres
   hiddenUI: ['poweredBy', 'language', 'appearance'],
 
-  // Tema del contenedor para que se parezca a tu mockup
+  // Estética del recuadro
   theme: {
     container: {
       boxShadow: '0px 18px 60px rgba(15, 23, 42, 0.20)',
