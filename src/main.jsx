@@ -1,54 +1,60 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { LiFiWidget } from '@lifi/widget'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { LiFiWidget } from '@lifi/widget';
 
+// ⚠️ IMPORTANTE: NO importar '@lifi/widget/styles.css' porque en Vercel da error.
+// El widget ya viene con estilos integrados suficientes.
 
-const themeConfig = {
+const widgetConfig = {
+  // Tu identificador de integrador en Li.Fi
+  integrator: 'waycard',
+
+  // Apariencia / diseño básico
   variant: 'wide',
-  appearance: 'system',
-  theme: {
-    colorSchemes: {
-      light: {
-        palette: {
-          primary: { main: '#5C67FF' },
-          secondary: { main: '#F7C2FF' }
-        }
-      },
-      dark: {
-        palette: {
-          primary: { main: '#5C67FF' },
-          secondary: { main: '#F7C2FF' }
-        }
-      }
+  appearance: 'light', // o "dark" o "auto"
+
+  // Configuración del SDK de Li.Fi
+  sdkConfig: {
+    // Tu API key de Li.Fi, viene desde Vercel: VITE_LIFI_API_KEY
+    apiKey: import.meta.env.VITE_LIFI_API_KEY,
+
+    // Opciones por defecto para todas las rutas de swap
+    defaultRouteOptions: {
+      // De nuevo, tu integrador (para atribución de volumen)
+      integrator: 'waycard',
+
+      // Fee del 0.8% (0.008 = 0.8%)
+      fee: 0.008,
     },
-    typography: {
-      fontFamily: 'Inter, sans-serif'
-    },
-    container: {
-      boxShadow: '0px 8px 32px rgba(0, 0, 0, 0.08)',
-      borderRadius: '16px'
-    }
-  }
+  },
+};
+
+function App() {
+  return (
+    <div
+      style={{
+        width: '100%',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#f3f4f6',
+      }}
+    >
+      <div
+        style={{
+          width: '420px',
+          maxWidth: '100%',
+        }}
+      >
+        <LiFiWidget config={widgetConfig} />
+      </div>
+    </div>
+  );
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <div style={{
-      width: '420px',
-      maxWidth: '100%',
-      margin: '40px auto'
-    }}>
-      <LiFiWidget
-        /** 🔐 TU CONFIG DE COMISIÓN */
-        apiKey={import.meta.env.VITE_LIFI_API_KEY}
-        integrator="waycard"
-        fee={0.008}
-
-        /** 🔧 CONFIG VISUAL */
-        variant="wide"
-        appearance="system"
-        theme={themeConfig.theme}
-      />
-    </div>
-  </React.StrictMode>,
-)
+    <App />
+  </React.StrictMode>
+);
