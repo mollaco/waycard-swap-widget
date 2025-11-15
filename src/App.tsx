@@ -46,7 +46,7 @@ const App: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#020617', // fondo oscuro tipo modal en el centro
+        background: '#fff', // fondo oscuro tipo modal en el centro
       }}
     >
       <LiFiWidget
