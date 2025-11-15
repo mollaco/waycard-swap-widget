@@ -2,7 +2,7 @@
 import React from 'react';
 import { LiFiWidget, WidgetConfig } from '@lifi/widget';
 // IMPORT CORRECTO DEL CSS (arregla el error de build)
-import '@lifi/widget/styles.css';
+
 
 const widgetConfig: Partial<WidgetConfig> = {
   // Usa la API key que ya has puesto en Vercel (variable de entorno)
