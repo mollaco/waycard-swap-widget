@@ -1,61 +1,43 @@
 // src/App.tsx
-import React, { useMemo } from 'react';
+import React from 'react';
 import { LiFiWidget, WidgetConfig } from '@lifi/widget';
-import '@lifi/widget/style.css'; // OJO: style.css (sin "s")
+// OJO: nombre correcto del CSS
+import '@lifi/widget/styles.css';
+
+const widgetConfig: Partial<WidgetConfig> = {
+  // Tu API key de LI.FI (ya la has puesto en Vercel como VITE_LIFI_API_KEY)
+  apiKey: import.meta.env.VITE_LIFI_API_KEY,
+
+  // Apariencia general del widget
+  variant: 'wide',        // como en el Playground
+  subvariant: 'split',    // pestañas Swap / Bridge
+  appearance: 'light',    // o 'dark' si quieres oscuro
+
+  // Forzamos que el destino sea siempre Polygon
+  toChain: 137,           // Polygon
+
+  // Slippage por defecto (0,5%)
+  slippage: 0.005,
+
+  // Tu comisión: 0,8%  (0.008 = 0.8%)
+  fee: 0.008,
+
+  // Ocultamos branding, idioma y selector de tema
+  hiddenUI: ['poweredBy', 'language', 'appearance'],
+
+  // Tema del contenedor para que se parezca a tu mockup
+  theme: {
+    container: {
+      boxShadow: '0px 18px 60px rgba(15, 23, 42, 0.20)',
+      borderRadius: 24,
+      border: '1px solid rgba(148, 163, 184, 0.25)',
+      background: '#ffffff',
+      maxWidth: 420,
+    },
+  },
+};
 
 const App: React.FC = () => {
-  const apiKey = import.meta.env.VITE_LIFI_API_KEY as string | undefined;
-
-  // Configuración del widget
-  const widgetConfig = useMemo(
-    (): Partial<WidgetConfig> => ({
-      // --- Autenticación / fees ---
-      apiKey,                 // Tu API key de LI.FI (desde Vercel)
-      fee: 0.008,             // 0.8% de comisión para ti (ligado a tu API key)
-
-      // --- Flujo por defecto: de cualquier red hacia Polygon ---
-      // El usuario puede cambiarlo si quiere, pero aquí le ayudas
-      toChain: 137,           // Polygon
-      // USDT en Polygon como token destino por defecto
-      toToken: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
-
-      // --- Apariencia / UI ---
-      variant: 'wide',        // Como en tu captura del playground
-      subvariant: 'default',  // Flujo normal "Exchange"
-      appearance: 'light',    // O 'auto' si quieres que siga el sistema
-
-      // Puedes ocultar elementos de UI
-      hiddenUI: [
-        'language',     // ocultar selector de idioma
-        'appearance',   // ocultar switch light/dark
-        'poweredBy',    // oculta "Powered by LI.FI"
-      ],
-
-      // Idiomas permitidos (aunque no se vea el selector)
-      languages: {
-        default: 'es',
-        allow: ['es', 'en'],
-      },
-
-      // Tema: bordes redondeados, sombra y responsivo
-      theme: {
-        container: {
-          borderRadius: 24,
-          boxShadow: '0px 18px 40px rgba(15, 23, 42, 0.20)',
-          maxWidth: 420,
-          width: '100%',
-        },
-      },
-
-      // Opcionalmente puedes forzar solo swap (no bridge)
-      // subvariant: 'split',
-      // subvariantOptions: { split: 'swap' },
-
-      // Más adelante podemos afinar routes, chains, tokens, etc.
-    }),
-    [apiKey]
-  );
-
   return (
     <div
       style={{
@@ -63,14 +45,14 @@ const App: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '16px',
         background:
-          'linear-gradient(135deg, #f5f7ff 0%, #f9fafb 30%, #eef2ff 100%)',
+          'radial-gradient(circle at 0% 0%, rgba(59,130,246,0.15) 0, transparent 55%),' +
+          'radial-gradient(circle at 100% 100%, rgba(56,189,248,0.12) 0, transparent 55%),' +
+          'linear-gradient(180deg,#0f172a,#020617)',
+        padding: '24px',
       }}
     >
-      <div style={{ width: '100%', maxWidth: 420 }}>
-        <LiFiWidget integrator="waycard.club" config={widgetConfig} />
-      </div>
+      <LiFiWidget integrator="waycard-swap-widget" config={widgetConfig} />
     </div>
   );
 };
