@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   LiFiWidget,
   type WidgetConfig,
@@ -9,28 +9,24 @@ import {
 const apiKey = import.meta.env.VITE_LIFI_API_KEY as string;
 
 const widgetConfig: Partial<WidgetConfig> = {
-  // Layout del widget
   variant: 'compact',
   subvariant: 'default',
   appearance: 'light',
 
   // Siempre destino Polygon
-  toChain: 137, // Polygon mainnet
+  toChain: 137,
 
-  // Idiomas
   languages: {
     default: 'es',
     allow: ['es', 'en'],
   },
 
   // Fees (0.8%) y dirección donde se envían
-  fee: 0.008, // 0.8%
+  fee: 0.008,
   feeRecipient: '0x190985CfcAa72062781a0558C1DD0Ad7c1fB3986',
 
-  // Ocultar marca LI.FI y selector de idioma dentro del widget
   hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
 
-  // Estilo contenedor principal del widget (sin sombra gorda)
   theme: {
     container: {
       borderRadius: 32,
@@ -66,10 +62,11 @@ const App: React.FC = () => {
         background: '#ffffff',
         padding: '16px',
         boxSizing: 'border-box',
-        fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+        fontFamily:
+          '"Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
       }}
     >
-      {/* Header Waycard: igual que en la web */}
+      {/* Header Waycard */}
       <div
         style={{
           display: 'flex',
@@ -78,11 +75,9 @@ const App: React.FC = () => {
           padding: '6px 18px',
           borderRadius: 999,
           background: '#ffffff',
-          // sin bordes ni sombras para que no parezca “círculo raro” alrededor del logo
           marginBottom: 14,
         }}
       >
-        {/* Cuadrado con degradado azul-lila envolviendo la W blanca */}
         <div
           style={{
             width: 40,
@@ -95,7 +90,6 @@ const App: React.FC = () => {
             overflow: 'hidden',
           }}
         >
-          {/* W blanca (el mismo blanco.png que usas en la web) */}
           <img
             src="https://waycard.club/images/blanco.png"
             alt="Waycard Logo"
@@ -120,25 +114,20 @@ const App: React.FC = () => {
         </span>
       </div>
 
-      {/* Contenedor del widget – sin caja gris alrededor */}
+      {/* Contenedor del widget */}
       <div
         style={{
           width: '100%',
           maxWidth: 620,
           borderRadius: 32,
           background: '#ffffff',
-          border: '1px solid #e5e7eb', // línea fina para marcar el borde, sin sombra
+          border: '1px solid #e5e7eb',
           overflow: 'hidden',
         }}
       >
-        <LiFiWidget
-          apiKey={apiKey}
-          integrator="Waycard Swap"
-          config={widgetConfig}
-        />
+        <LiFiWidget apiKey={apiKey} integrator="Waycard Swap" config={widgetConfig} />
       </div>
 
-      {/* Footer Powered Waynance */}
       <div
         style={{
           marginTop: 10,
