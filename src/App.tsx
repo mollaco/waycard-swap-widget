@@ -67,54 +67,56 @@ const App: React.FC = () => {
         fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
       }}
     >
-     {/* Header Waycard */}
-<div
-  style={{
-    display: 'flex',
-    alignItems: 'center',
-    gap: 12,
-    padding: '6px 18px',
-    borderRadius: 999,
-    background: '#ffffff',
-    marginBottom: 14,
-  }}
->
-  {/* Logo tal cual el de /public/waycard-logo.png */}
-  <div
-    style={{
-      width: 40,
-      height: 40,
-      borderRadius: 12,
-      overflow: 'hidden',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-  >
-    <img
-      src="/waycard-logo.png"
-      alt="Waycard Logo"
-      style={{
-        width: '100%',
-        height: '100%',
-        objectFit: 'contain',
-        display: 'block',
-      }}
-    />
-  </div>
+      {/* Header Waycard: igual que en la web */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          padding: '6px 18px',
+          borderRadius: 999,
+          background: '#ffffff',
+          // sin bordes ni sombras para que no parezca “círculo raro” alrededor del logo
+          marginBottom: 14,
+        }}
+      >
+        {/* Cuadrado con degradado azul-lila envolviendo la W blanca */}
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 12,
+            background: 'linear-gradient(135deg, #1a56db, #9333ea)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+          }}
+        >
+          {/* W blanca (el mismo blanco.png que usas en la web) */}
+          <img
+            src="public/waycard-logo.png"
+            alt="Waycard Logo"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+        </div>
 
-  <span
-    style={{
-      fontWeight: 800,
-      fontSize: '1.05rem',
-      letterSpacing: '-0.03em',
-      color: '#0f172a',
-    }}
-  >
-    Waycard
-  </span>
-</div>
-
+        <span
+          style={{
+            fontWeight: 800,
+            fontSize: '1.05rem',
+            letterSpacing: '-0.03em',
+            color: '#0f172a',
+          }}
+        >
+          Waycard
+        </span>
+      </div>
 
       {/* Contenedor del widget – sin caja gris alrededor */}
       <div
