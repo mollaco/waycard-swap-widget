@@ -22,24 +22,24 @@ const widgetConfig: Partial<WidgetConfig> = {
     allow: ['es', 'en'],
   },
 
-  // Comisión (0.8%)
+  // Comisión (0.8 %)
   fee: 0.008,
 
-  // Ocultar marca LI.FI y selector de idioma dentro del widget
+  // Ocultar marca LI.FI y selector de idioma
   hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
 
-  // Estilo contenedor principal del widget
+  // Contenedor interno del widget
   theme: {
     container: {
-      borderRadius: 24,
-      boxShadow: 'none',        // sin sombra gris
+      borderRadius: 0,       // dejamos el marco al wrapper externo
+      boxShadow: 'none',     // sin sombras internas
       background: '#ffffff',
     },
   },
 };
 
 const App: React.FC = () => {
-  // Evitar scroll en el documento dentro del iframe
+  // Evitar scroll de la página dentro del iframe
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     const originalMargin = document.body.style.margin;
@@ -61,70 +61,67 @@ const App: React.FC = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#ffffff',
         padding: '16px',
         boxSizing: 'border-box',
+        background: 'transparent', // que se vea tu overlay con blur
       }}
     >
-      {/* Header Waycard */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          background: '#ffffff',
-          padding: '10px 18px',
-          borderRadius: 999,
-          boxShadow: '0 6px 20px rgba(15, 23, 42, 0.15)',
-          marginBottom: '16px',
-        }}
-      >
-        <div
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: 12,
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          {/* Usa el logo blanco con fondo azul (cópialo en /public) */}
-          <img
-            src="/waycard-logo.png"
-            alt="Waycard"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        </div>
-        <span
-          style={{
-            fontWeight: 700,
-            fontSize: '1rem',
-            color: '#0f172a',
-          }}
-        >
-          Waycard
-        </span>
-      </div>
-
-      {/* Widget LI.FI */}
+      {/* Card completa sin sombras grises */}
       <div
         style={{
           width: '100%',
           maxWidth: 520,
-          maxHeight: '80vh',
-          overflow: 'hidden',
-          borderRadius: 24,
-          boxShadow: '0 24px 64px rgba(15, 23, 42, 0.18)',
+          borderRadius: 28,
           background: '#ffffff',
+          border: '1px solid #e5e7eb',
+          overflow: 'hidden',
+          boxShadow: 'none', 
         }}
       >
-        <LiFiWidget
-          apiKey={apiKey}
-          integrator="Waycard Swap"
-          config={widgetConfig}
-        />
+        {/* Barra de marca arriba, sin círculo ni pastilla flotante */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            padding: '12px 20px',
+            borderBottom: '1px solid #e5e7eb',
+            background: '#f9fafb',
+          }}
+        >
+          <img
+            src="/waycard-logo.png" // el PNG que has subido a /public
+            alt="Waycard"
+            style={{
+              width: 32,
+              height: 32,
+              objectFit: 'contain',  // respeta tu icono tal cual
+            }}
+          />
+          <span
+            style={{
+              fontWeight: 800,
+              fontSize: '1.05rem',
+              color: '#0f172a',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Waycard
+          </span>
+        </div>
+
+        {/* Widget Li.Fi dentro de la tarjeta */}
+        <div
+          style={{
+            padding: 0, // que el widget se pegue al borde
+          }}
+        >
+          <LiFiWidget
+            apiKey={apiKey}
+            integrator="Waycard Swap"
+            config={widgetConfig}
+          />
+        </div>
       </div>
 
       {/* Footer Powered Waynance */}
