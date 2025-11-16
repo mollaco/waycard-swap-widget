@@ -28,7 +28,7 @@ const widgetConfig: Partial<WidgetConfig> = {
   // Ocultar marca LI.FI y selector de idioma dentro del widget
   hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
 
-  // Estilo contenedor principal del widget (SIN sombras)
+  // Estilo contenedor principal del widget (sin sombra gorda)
   theme: {
     container: {
       borderRadius: 32,
@@ -61,35 +61,51 @@ const App: React.FC = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#ffffff',     // fondo blanco limpio
+        background: '#ffffff',
         padding: '16px',
         boxSizing: 'border-box',
         fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
       }}
     >
-      {/* Header Waycard (logo + texto, sin sombras raras) */}
+      {/* Header Waycard: igual que en la web */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: 10,
-          padding: '8px 18px',
+          gap: 12,
+          padding: '6px 18px',
           borderRadius: 999,
           background: '#ffffff',
-          border: '1px solid #e5e7eb', // línea finita, sin shadow
-          marginBottom: 12,
+          // sin bordes ni sombras para que no parezca “círculo raro” alrededor del logo
+          marginBottom: 14,
         }}
       >
-        <img
-          src="/waycard-logo.png"  // logo cuadrado azul con W blanca (en /public)
-          alt="Waycard"
+        {/* Cuadrado con degradado azul-lila envolviendo la W blanca */}
+        <div
           style={{
-            width: 30,
-            height: 30,
+            width: 40,
+            height: 40,
             borderRadius: 12,
-            display: 'block',
+            background: 'linear-gradient(135deg, #1a56db, #9333ea)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
           }}
-        />
+        >
+          {/* W blanca (el mismo blanco.png que usas en la web) */}
+          <img
+            src="/blanco.png"
+            alt="Waycard Logo"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+        </div>
+
         <span
           style={{
             fontWeight: 800,
@@ -102,14 +118,14 @@ const App: React.FC = () => {
         </span>
       </div>
 
-      {/* Contenedor del widget – SIN sombras grises */}
+      {/* Contenedor del widget – sin caja gris alrededor */}
       <div
         style={{
           width: '100%',
           maxWidth: 620,
           borderRadius: 32,
           background: '#ffffff',
-          border: '1px solid #e5e7eb', // borde muy suave
+          border: '1px solid #e5e7eb', // línea fina para marcar el borde, sin sombra
           overflow: 'hidden',
         }}
       >
