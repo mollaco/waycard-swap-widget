@@ -5,31 +5,32 @@ import {
   HiddenUI,
 } from '@lifi/widget';
 
-const apiKey = import.meta.env.VITE_LIFI_API_KEY;
+// La API key viene de Vite (Vercel ya la tiene como VITE_LIFI_API_KEY)
+const apiKey = import.meta.env.VITE_LIFI_API_KEY as string;
 
-// Configuración del widget
 const widgetConfig: Partial<WidgetConfig> = {
-  // Layout: tipo de widget
-  variant: 'compact',          // o 'wide' si lo prefieres más ancho
+  // Layout del widget
+  variant: 'compact',
   subvariant: 'default',
   appearance: 'light',
 
-  // Queremos que siempre vaya hacia Polygon
-  toChain: 137,                // Polygon mainnet
+  // Siempre destino Polygon
+  toChain: 137, // Polygon mainnet
 
-  // Idioma
+  // Idiomas
   languages: {
     default: 'es',
     allow: ['es', 'en'],
   },
 
-  // Comisión para ti (0.8% = 0.008)
-  fee: 0.008,
+  // Fees (0.8%) y dirección donde se envían
+  fee: 0.008, // 0.8%
+  feeRecipient: '0x190985CfcAa72062781a0558C1DD0Ad7c1fB3986',
 
-  // Ocultar marca de LI.FI y selector de idioma dentro del widget
+  // Ocultar branding interno de LiFi
   hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
 
-  // Estilo del contenedor (tarjeta central)
+  // Estilo del contenedor del widget
   theme: {
     container: {
       borderRadius: 24,
@@ -46,12 +47,12 @@ const App: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#fff', // fondo oscuro tipo modal en el centro
+        background: '#ffffff', // el fondo blanco que tienes ahora
       }}
     >
       <LiFiWidget
         apiKey={apiKey}
-        integrator="Waycard Swap"
+        integrator="waycard-web"
         config={widgetConfig}
       />
     </div>
