@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   LiFiWidget,
   type WidgetConfig,
@@ -30,31 +30,128 @@ const widgetConfig: Partial<WidgetConfig> = {
   // Ocultar branding interno de LiFi
   hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
 
-  // Estilo del contenedor del widget
+  // Estilo del contenedor del widget (tal cual lo tenías)
   theme: {
     container: {
       borderRadius: 24,
       boxShadow: '0px 24px 64px rgba(15, 23, 42, 0.35)',
+      background: '#ffffff',
     },
   },
 };
 
 const App: React.FC = () => {
+  // Opcional: bloquear scroll dentro del iframe
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    const originalMargin = document.body.style.margin;
+
+    document.body.style.overflow = 'hidden';
+    document.body.style.margin = '0';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.margin = originalMargin;
+    };
+  }, []);
+
   return (
     <div
       style={{
-        minHeight: '100vh',
+        height: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#ffffff', // el fondo blanco que tienes ahora
+        background: '#ffffff',
+        padding: '16px',
+        boxSizing: 'border-box',
+        fontFamily:
+          '"Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
       }}
     >
-      <LiFiWidget
-        apiKey={apiKey}
-        integrator="waycard-web"
-        config={widgetConfig}
-      />
+      {/* Header Waycard como en la web */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          padding: '6px 18px',
+          borderRadius: 999,
+          background: '#ffffff',
+          marginBottom: 14,
+        }}
+      >
+        {/* Cuadrado con degradado azul-lila */}
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 12,
+            background: 'linear-gradient(135deg, #1a56db, #9333ea)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+          }}
+        >
+          {/* W blanca – usa la ruta que prefieras */}
+          <img
+            // si el PNG está en public/waycard-logo.png del proyecto:
+            // src="/waycard-logo.png"
+            // o usando el de tu web:
+            src="https://waycard.club/images/blanco.png"
+            alt="Waycard Logo"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+        </div>
+
+        <span
+          style={{
+            fontWeight: 800,
+            fontSize: '1.05rem',
+            letterSpacing: '-0.03em',
+            color: '#0f172a',
+          }}
+        >
+          Waycard
+        </span>
+      </div>
+
+      {/* Caja del widget */}
+      <div
+        style={{
+          width: '100%',
+          maxWidth: 620,
+          borderRadius: 32,
+          background: '#ffffff',
+          border: '1px solid #e5e7eb',
+          overflow: 'hidden',
+        }}
+      >
+        <LiFiWidget
+          apiKey={apiKey}
+          integrator="waycard-web"  // <--- el mismo que en el código que te funcionaba
+          config={widgetConfig}
+        />
+      </div>
+
+      {/* Footer Powered Waynance */}
+      <div
+        style={{
+          marginTop: 10,
+          fontSize: 12,
+          color: '#6b7280',
+          textAlign: 'center',
+        }}
+      >
+        By <strong>Powered Waynance</strong>
+      </div>
     </div>
   );
 };
