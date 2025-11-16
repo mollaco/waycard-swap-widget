@@ -30,18 +30,19 @@ const widgetConfig: Partial<WidgetConfig> = {
   // Ocultar branding interno de LiFi
   hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
 
-  // Estilo del contenedor del widget (tal cual lo tenías)
+  // Estilo del contenedor del widget SIN sombra ni borde gordo
   theme: {
     container: {
       borderRadius: 24,
-      boxShadow: '0px 24px 64px rgba(15, 23, 42, 0.35)',
+      boxShadow: 'none',      // <-- quitamos la sombra gorda
+      border: 'none',         // <-- sin borde extra
       background: '#ffffff',
     },
   },
 };
 
 const App: React.FC = () => {
-  // Opcional: bloquear scroll dentro del iframe
+  // Evitar scroll dentro del iframe
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     const originalMargin = document.body.style.margin;
@@ -82,7 +83,6 @@ const App: React.FC = () => {
           marginBottom: 14,
         }}
       >
-        {/* Cuadrado con degradado azul-lila */}
         <div
           style={{
             width: 40,
@@ -95,12 +95,9 @@ const App: React.FC = () => {
             overflow: 'hidden',
           }}
         >
-          {/* W blanca – usa la ruta que prefieras */}
           <img
-            // si el PNG está en public/waycard-logo.png del proyecto:
-            // src="/waycard-logo.png"
-            // o usando el de tu web:
             src="https://waycard.club/images/blanco.png"
+            // o si lo tienes en public: src="/waycard-logo.png"
             alt="Waycard Logo"
             style={{
               width: '100%',
@@ -123,25 +120,24 @@ const App: React.FC = () => {
         </span>
       </div>
 
-      {/* Caja del widget */}
+      {/* Contenedor del widget – ahora SIN borde ni sombra */}
       <div
         style={{
           width: '100%',
           maxWidth: 620,
-          borderRadius: 32,
-          background: '#ffffff',
-          border: '1px solid #e5e7eb',
-          overflow: 'hidden',
+          borderRadius: 0,     // da igual, fondo y contenedor son blancos
+          background: 'transparent',
+          border: 'none',      // <-- esto quitaba el marco gris
+          overflow: 'visible',
         }}
       >
         <LiFiWidget
           apiKey={apiKey}
-          integrator="waycard-web"  // <--- el mismo que en el código que te funcionaba
+          integrator="waycard-web"
           config={widgetConfig}
         />
       </div>
 
-      {/* Footer Powered Waynance */}
       <div
         style={{
           marginTop: 10,
