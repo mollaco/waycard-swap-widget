@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   LiFiWidget,
   type WidgetConfig,
   HiddenUI,
 } from '@lifi/widget';
 
-const apiKey = import.meta.env.VITE_LIFI_API_KEY;
+// La API key viene de Vite (Vercel ya la tiene como VITE_LIFI_API_KEY)
+const apiKey = import.meta.env.VITE_LIFI_API_KEY as string;
 
-// Configuración del widget
 const widgetConfig: Partial<WidgetConfig> = {
+  // Layout del widget
   variant: 'compact',
   subvariant: 'default',
   appearance: 'light',
 
-  // Siempre hacia Polygon
-  toChain: 137,
+  // Siempre destino Polygon
+  toChain: 137, // Polygon mainnet
 
   // Idiomas
   languages: {
@@ -22,8 +23,9 @@ const widgetConfig: Partial<WidgetConfig> = {
     allow: ['es', 'en'],
   },
 
-  // Comisión (0.8 %)
-  fee: 0.008,
+  // Fees (0.8%) y dirección donde se envían
+  fee: 0.008, // 0.8%
+  feeRecipient: '0x190985CfcAa72062781a0558C1DD0Ad7c1fB3986',
 
   // Ocultar marca LI.FI y selector de idioma dentro del widget
   hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
