@@ -68,45 +68,31 @@ const App: React.FC = () => {
           '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
       }}
     >
-      {/* Header Waycard centrado */}
+      {/* Header Waycard SIN pastilla, solo logo + texto */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '10px',
-          background: '#ffffff',
-          padding: '10px 22px',
-          borderRadius: 999,
-          // quitamos cualquier glow/sombra fuerte, solo una muy suave
-          boxShadow: '0 6px 16px rgba(15, 23, 42, 0.06)',
-          marginBottom: '18px',
+          gap: 10,
+          marginBottom: 18,
         }}
       >
-        <div
+        <img
+          src="/waycard-logo.png"   // cuadrado azul con la W blanca
+          alt="Waycard"
           style={{
-            width: 40,
-            height: 40,
-            borderRadius: 14,
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            // SIN sombra alrededor del azul
-            boxShadow: 'none',
+            width: 32,
+            height: 32,
+            borderRadius: 10,      // esquinas suavitas como en la web
+            objectFit: 'cover',
+            display: 'block',
           }}
-        >
-          <img
-            src="/waycard-logo.png" // el que has subido en /public
-            alt="Waycard"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        </div>
-
+        />
         <span
           style={{
             fontWeight: 800,
-            fontSize: '1.05rem',
+            fontSize: '1rem',
             letterSpacing: '-0.02em',
             color: '#0f172a',
           }}
