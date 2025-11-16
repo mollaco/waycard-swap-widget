@@ -22,24 +22,25 @@ const widgetConfig: Partial<WidgetConfig> = {
     allow: ['es', 'en'],
   },
 
-  // Comisión (0.8 %)
+  // Comisión (0.8%)
   fee: 0.008,
 
-  // Ocultar marca LI.FI y selector de idioma
+  // Ocultar marca LI.FI y selector de idioma dentro del widget
   hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
 
-  // Contenedor interno del widget
+  // Quitamos sombra y bordes internos del contenedor de LI.FI
   theme: {
     container: {
-      borderRadius: 0,       // dejamos el marco al wrapper externo
-      boxShadow: 'none',     // sin sombras internas
+      borderRadius: 0,
+      boxShadow: 'none',
       background: '#ffffff',
+      padding: 0,
     },
   },
 };
 
 const App: React.FC = () => {
-  // Evitar scroll de la página dentro del iframe
+  // Evitar scroll del documento dentro del iframe
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     const originalMargin = document.body.style.margin;
@@ -56,66 +57,79 @@ const App: React.FC = () => {
   return (
     <div
       style={{
-        height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        background: '#ffffff',
         padding: '16px',
         boxSizing: 'border-box',
-        background: 'transparent', // que se vea tu overlay con blur
       }}
     >
-      {/* Card completa sin sombras grises */}
+      {/* CARD principal sin sombra gris */}
       <div
         style={{
           width: '100%',
-          maxWidth: 520,
+          maxWidth: 560,
           borderRadius: 28,
           background: '#ffffff',
-          border: '1px solid #e5e7eb',
+          boxShadow: 'none', // sin halo gris
+          border: '1px solid rgba(226, 232, 240, 0.9)', // marco muy suave
           overflow: 'hidden',
-          boxShadow: 'none', 
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
-        {/* Barra de marca arriba, sin círculo ni pastilla flotante */}
+        {/* Header igual que en la web */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 10,
             padding: '12px 20px',
-            borderBottom: '1px solid #e5e7eb',
-            background: '#f9fafb',
+            borderBottom: '1px solid rgba(226, 232, 240, 0.9)',
+            background: '#ffffff',
           }}
         >
-          <img
-            src="/waycard-logo.png" // el PNG que has subido a /public
-            alt="Waycard"
-            style={{
-              width: 32,
-              height: 32,
-              objectFit: 'contain',  // respeta tu icono tal cual
-            }}
-          />
-          <span
-            style={{
-              fontWeight: 800,
-              fontSize: '1.05rem',
-              color: '#0f172a',
-              letterSpacing: '-0.02em',
-            }}
-          >
-            Waycard
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: 12,
+                background: 'linear-gradient(135deg, #4f46e5, #06b6d4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 0 22px rgba(79, 70, 229, 0.45)',
+              }}
+            >
+              {/* blanco.png o waycard-logo.png en /public */}
+              <img
+                src="/waycard-logo.png"
+                alt="Waycard"
+                style={{
+                  width: '80%',
+                  height: '80%',
+                  objectFit: 'contain',
+                }}
+              />
+            </div>
+            <span
+              style={{
+                fontWeight: 800,
+                fontSize: '1.05rem',
+                letterSpacing: '-0.03em',
+                color: '#0f172a',
+              }}
+            >
+              Waycard
+            </span>
+          </div>
         </div>
 
-        {/* Widget Li.Fi dentro de la tarjeta */}
-        <div
-          style={{
-            padding: 0, // que el widget se pegue al borde
-          }}
-        >
+        {/* Widget LI.FI dentro del card */}
+        <div style={{ padding: 20 }}>
           <LiFiWidget
             apiKey={apiKey}
             integrator="Waycard Swap"
@@ -129,11 +143,11 @@ const App: React.FC = () => {
         style={{
           marginTop: 10,
           fontSize: 12,
-          color: '#6b7280',
+          color: '#9ca3af',
           textAlign: 'center',
         }}
       >
-        By <strong>Powered Waynance</strong>
+        By <span style={{ fontWeight: 600 }}>Powered Waynance</span>
       </div>
     </div>
   );
