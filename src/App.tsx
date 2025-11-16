@@ -7,7 +7,7 @@ import {
 
 const apiKey = import.meta.env.VITE_LIFI_API_KEY;
 
-// Config del widget
+// Configuración del widget
 const widgetConfig: Partial<WidgetConfig> = {
   variant: 'compact',
   subvariant: 'default',
@@ -25,21 +25,21 @@ const widgetConfig: Partial<WidgetConfig> = {
   // Comisión (0.8 %)
   fee: 0.008,
 
-  // Ocultar marca LI.FI y selector de idioma
+  // Ocultar marca LI.FI y selector de idioma dentro del widget
   hiddenUI: [HiddenUI.PoweredBy, HiddenUI.Language],
 
-  // Estilo contenedor interno del widget
+  // Estilo contenedor principal del widget (SIN sombras)
   theme: {
     container: {
-      borderRadius: 24,
-      boxShadow: 'none',      // sin sombra gris
+      borderRadius: 32,
+      boxShadow: 'none',
       background: '#ffffff',
     },
   },
 };
 
 const App: React.FC = () => {
-  // Evitar scroll de la página dentro del iframe
+  // Evitar scroll dentro del iframe
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     const originalMargin = document.body.style.margin;
@@ -61,39 +61,40 @@ const App: React.FC = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#ffffff',
+        background: '#ffffff',     // fondo blanco limpio
         padding: '16px',
         boxSizing: 'border-box',
-        fontFamily:
-          '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
       }}
     >
-      {/* Header Waycard SIN pastilla, solo logo + texto */}
+      {/* Header Waycard (logo + texto, sin sombras raras) */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
           gap: 10,
-          marginBottom: 18,
+          padding: '8px 18px',
+          borderRadius: 999,
+          background: '#ffffff',
+          border: '1px solid #e5e7eb', // línea finita, sin shadow
+          marginBottom: 12,
         }}
       >
         <img
-          src="/waycard-logo.png"   // cuadrado azul con la W blanca
+          src="/waycard-logo.png"  // logo cuadrado azul con W blanca (en /public)
           alt="Waycard"
           style={{
-            width: 32,
-            height: 32,
-            borderRadius: 10,      // esquinas suavitas como en la web
-            objectFit: 'cover',
+            width: 30,
+            height: 30,
+            borderRadius: 12,
             display: 'block',
           }}
         />
         <span
           style={{
             fontWeight: 800,
-            fontSize: '1rem',
-            letterSpacing: '-0.02em',
+            fontSize: '1.05rem',
+            letterSpacing: '-0.03em',
             color: '#0f172a',
           }}
         >
@@ -101,16 +102,15 @@ const App: React.FC = () => {
         </span>
       </div>
 
-      {/* Widget LI.FI */}
+      {/* Contenedor del widget – SIN sombras grises */}
       <div
         style={{
           width: '100%',
-          maxWidth: 520,
-          maxHeight: '80vh',
-          overflow: 'hidden',
-          borderRadius: 24,
-          boxShadow: '0 24px 64px rgba(15, 23, 42, 0.18)',
+          maxWidth: 620,
+          borderRadius: 32,
           background: '#ffffff',
+          border: '1px solid #e5e7eb', // borde muy suave
+          overflow: 'hidden',
         }}
       >
         <LiFiWidget
