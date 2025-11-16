@@ -95,7 +95,7 @@ const App: React.FC = () => {
         >
           {/* W blanca (el mismo blanco.png que usas en la web) */}
           <img
-            src="public/waycard-logo.png"
+            src="https://waycard.club/images/blanco.png"
             alt="Waycard Logo"
             style={{
               width: '100%',
